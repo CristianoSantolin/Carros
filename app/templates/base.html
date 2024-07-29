@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffbd69;
+        }
+
+        nav ul li.active a {
+            color: #999;
+        }
+
+        nav ul li.active a:hover {
+            color: #ccc;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        footer {
+            background-color: #000;
+            color: #fff;
+            padding: 5px 20px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        button[type="submit"] {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #ffbd69;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Revenda Multimarcas</h1>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><span>Olá, {{ user.username }}</span></li>
+                    <li><a href="{% url 'new_car_view' %}"><i class="fas fa-car"></i> Cadastrar Carro</a></li>
+                {% endif %} 
+                {% if not user.is_authenticated %}
+                    <li><a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Cadastre-se</a></li>
+                    <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                {% endif %}
+                <li><a href="{% url 'cars_list' %}"><i class="fas fa-car-side"></i> Carros</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                {% endif %}                
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Revenda Multimarcas</p>
+    </footer>
+</body>
+
+</html>
